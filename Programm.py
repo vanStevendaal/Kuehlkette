@@ -57,7 +57,7 @@ for row in cursor:
 
 #---------------------------------------------FUNKTIONEN-----------------------------------------------------------------#
 
-#Funktion zur Überprüfung ob In und Out immer aufeinander folgen
+#Funktion zur Überprüfung der Konsistenz = (Folgt In auf Out und Ist der erste Eintrag ein In)
 def überprüfe_konsistenz(matrix):
     for i in range(len(matrix) - 1):
         if matrix[i][-2] == "'in'" and matrix[i+1][-2] != "'out'":
@@ -78,7 +78,7 @@ else:
     
 #-------------------------------------------------------------------------------------------------------------------------#
     
-#Funktion zur Überprüfung der Zeistempel und der "In" und "Out"   
+#Funktion zur Überprüfung der Zeistempel (Ist die zeitliche Abfolge sinnvoll und wurden die 10 Minuten eingehalten)   
 def überprüfe_zeitdifferenz(matrix): 
     for i in range(len(matrix) - 1):
         if matrix[i][-2] == "'in'" and matrix[i+1][-2] == "'out'":
