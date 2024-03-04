@@ -67,15 +67,16 @@ while True:
     transportdauer_ergebnis = funktionen.überprüfe_transportdauer(alle_daten)
    
     if konsistenz_ergebnis and zeitdifferenz_ergebnis and transportdauer_ergebnis:
-        print("Die ID", transport_id, "ist korrekt.")
+        print("Die ID", transport_id, "ist \033[1;32;4mkorrekt\033[0m.")
     else:
         # Wenn ein Fehler aufgetreten ist, Ausgabe der entsprechenden Fehlermeldungen
+        print("Die ID", transport_id," weist folgende Fehler auf.")
         if not konsistenz_ergebnis:
-            print(f"Warnung: Die Kühlkette weist Konsistenzfehler auf: {konsistenz_fehlermeldung}")
+            print(f"\033[1;31;4mWarnung:\033[0m Die Kühlkette weist Konsistenzfehler auf: {konsistenz_fehlermeldung}")
         if not zeitdifferenz_ergebnis:
-            print(f"Warnung: {zeitdifferenz_fehlermeldung}")
+            print(f"\033[1;31;4mWarnung:\033[0m {zeitdifferenz_fehlermeldung}")
         if not transportdauer_ergebnis:
-            print("Warnung: Die Transportdauer betrug länger als 48 Stunden.")
+            print("\033[1;31;4mWarnung:\033[0m Die Transportdauer betrug länger als 48 Stunden.")
 
         
         
