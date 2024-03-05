@@ -4,13 +4,13 @@ import funktionen
 
 # Verbindungsdaten
 server = 'sc-db-server.database.windows.net'
-database = 'supplychain' # Setze den Namen deiner Datenbank hier ein
+database = 'supplychain' 
 username = 'rse'
 password = 'Pa$$w0rd'
 
-# Verbindungsstring
+# Festlegen der Vebindungsdaten (String)
 conn_str = (
-f'DRIVER={{ODBC Driver 18 for SQL Server}};'
+f'DRIVER={{ODBC Driver 17 for SQL Server}};'
 f'SERVER={server};'
 f'DATABASE={database};'
 f'UID={username};'
@@ -49,7 +49,8 @@ while True:
         else:
             print("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und", len(transport_id_liste))
     
-    # SQL-Abfrage ausführen
+    # SQL-Abfrage ausführen, sortiert nach der voher Ausgewählten Transport ID1
+            
     cursor.execute('SELECT * FROM coolchain WHERE transportid = ?', transport_id)
     # Ergebnisse speichern
     for row in cursor:
