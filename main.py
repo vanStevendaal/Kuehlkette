@@ -1,3 +1,7 @@
+"""
+Author: Leon van Stevendaal & Merlin Rayner
+Version: 1.0
+"""
 import pyodbc
 from datetime import datetime, timedelta
 import functions
