@@ -4,8 +4,8 @@ This Python program is a comprehensive solution for monitoring and verifying col
 
 1. [Features](#features)
 2. [Functions](#functions)
-5. [Usage](#Usage)
-6. [License](#license)
+3. [Usage](#Usage)
+4. [License](#license)
 
 
 ## Features
