@@ -31,7 +31,7 @@ Three specialized functions have been written to check the database for consiste
 
     Install ODBC Driver on your Windows Computer (https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver16)
     If you have Linux install this (https://learn.microsoft.com/de-de/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=debian18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline)
-    Change the connection data for your Database
+    Change the connection data
     Run the program    
 
 ## License
