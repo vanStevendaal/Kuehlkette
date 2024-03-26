@@ -1,14 +1,14 @@
 import pyodbc
 from datetime import datetime, timedelta
-import funktionen
+import functions
 
-# Verbindungsdaten
+# Connection data
 server = 'sc-db-server.database.windows.net'
 database = 'supplychain' 
 username = 'rse'
 password = 'Pa$$w0rd'
 
-# Festlegen der Vebindungsdaten (String)
+# Define connection string
 conn_str = (
 f'DRIVER={{ODBC Driver 17 for SQL Server}};'
 f'SERVER={server};'
@@ -18,67 +18,63 @@ f'PWD={password}'
 )
 
 while True:
-    # Verbindung herstellen
+    # Establish connection
     conn = pyodbc.connect(conn_str)
-    # Cursor erstellen
+    # Create cursor
     cursor = conn.cursor()
     
     
-    # Matrix für die Daten initialisieren
-    alle_daten = []
+    # Initialize matrix for data
+    all_data = []
     
-    alle_transport_id_liste = []
+    all_transport_id_list = []
     
-    transport_id_liste=[]
+    transport_id_list=[]
     
-    # Abrufen der vorhandenen Transport IDs in der Datenbank
+    # Retrieve existing Transport IDs from the database
     cursor.execute('SELECT transportid FROM coolchain')
     for row in cursor:
-        alle_transport_id_liste.append(row[0])
+        all_transport_id_list.append(row[0])
     
-    for id in alle_transport_id_liste:
-        if id not in transport_id_liste:
-            transport_id_liste.append(id)
+    for id in all_transport_id_list:
+        if id not in transport_id_list:
+            transport_id_list.append(id)
     
-    # Benutzereingabe für die Auswahl der Transport-ID
+    # User input for selecting the Transport ID
     while True:
-        eintrag = int(input("Welchen Eintrag wollen sie überprüfen? (1-" + str(len(transport_id_liste)) + ") "))
-        if 1 <= eintrag <= len(transport_id_liste):
-            transport_id = transport_id_liste[eintrag-1]
+        entry = int(input("Which entry do you want to check? (1-" + str(len(transport_id_list)) + ") "))
+        if 1 <= entry <= len(transport_id_list):
+            transport_id = transport_id_list[entry-1]
             break
         else:
-            print("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und", len(transport_id_liste))
+            print("Invalid input. Please choose a number between 1 and", len(transport_id_list))
     
-    # SQL-Abfrage ausführen, sortiert nach der voher Ausgewählten Transport ID1
+    # Execute SQL query, sorted by the previously selected Transport ID
             
     cursor.execute('SELECT * FROM coolchain WHERE transportid = ?', transport_id)
-    # Ergebnisse speichern
+    # Save results
     for row in cursor:
-        alle_daten.append(row)
+        all_data.append(row)
 
-    # Verbindung schließen
+    # Close connection
     cursor.close()
     conn.close()
     
-    # Überprüfung der Kühlkettenkonsistenz
-    konsistenz_ergebnis, konsistenz_fehlermeldung = funktionen.überprüfe_konsistenz(alle_daten)
-    # Überprüfung der Zeitdifferenz
-    zeitdifferenz_ergebnis, zeitdifferenz_fehlermeldung = funktionen.überprüfe_zeitdifferenz(alle_daten)
-    # Überprüfung der Transportdauer
-    transportdauer_ergebnis = funktionen.überprüfe_transportdauer(alle_daten)
+    # Check for cold chain consistency
+    consistency_result, consistency_error = functions.check_consistency(all_data)
+    # Check time difference
+    time_difference_result, time_difference_error = functions.check_time_difference(all_data)
+    # Check transport duration
+    transport_duration_result = functions.check_transport_duration(all_data)
    
-    if konsistenz_ergebnis and zeitdifferenz_ergebnis and transportdauer_ergebnis:
-        print("Die ID", transport_id, "ist \033[1;32;4mkorrekt\033[0m.")
+    if consistency_result and time_difference_result and transport_duration_result:
+        print("The ID", transport_id, "is \033[1;32;4mcorrect\033[0m.")
     else:
-        # Wenn ein Fehler aufgetreten ist, Ausgabe der entsprechenden Fehlermeldungen
-        print("Die ID", transport_id," weist folgende Fehler auf.")
-        if not konsistenz_ergebnis:
-            print(f"\033[1;31;4mWarnung:\033[0m Die Kühlkette weist Konsistenzfehler auf: {konsistenz_fehlermeldung}")
-        if not zeitdifferenz_ergebnis:
-            print(f"\033[1;31;4mWarnung:\033[0m {zeitdifferenz_fehlermeldung}")
-        if not transportdauer_ergebnis:
-            print("\033[1;31;4mWarnung:\033[0m Die Transportdauer betrug länger als 48 Stunden.")
-
-        
-        
-   
+        # If an error occurred, print the corresponding error messages
+        print("The ID", transport_id," has the following issues.")
+        if not consistency_result:
+            print(f"\033[1;31;4mWarning:\033[0m The cold chain has consistency errors: {consistency_error}")
+        if not time_difference_result:
+            print(f"\033[1;31;4mWarning:\033[0m {time_difference_error}")
+        if not transport_duration_result:
+            print("\033[1;31;4mWarning:\033[0m The transport duration exceeded 48 hours.")

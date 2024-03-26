@@ -1,41 +1,39 @@
 from datetime import timedelta, datetime
 
-#Funktion zur Überprüfung der Konsistenz = (Folgt In auf Out und Ist der erste Eintrag ein In)
-def überprüfe_konsistenz(matrix):
+# Function to check consistency = (Follows In after Out and Is the first entry an In)
+def check_consistency(matrix):
     for i in range(len(matrix) - 1):
         if matrix[i][-2] == "'in'" and matrix[i+1][-2] != "'out'":
-            return False, "In folgt nicht auf Out"
+            return False, "In does not follow Out"
         if matrix[i][-2] == matrix[i+1][-2]:
-            return False, f"Eintrag {i} und Eintrag {i+1} sind beide '{matrix[i][-2]}'"
+            return False, f"Entry {i} and Entry {i+1} are both '{matrix[i][-2]}'"
         
     if matrix[0][-2] != "'in'":
-        return False, "Erster Eintrag ist kein In"
+        return False, "First entry is not an In"
     return True, ""
 
-
-
-#Funktion zur Überprüfung der Zeistempel (Ist die zeitliche Abfolge sinnvoll und wurden die 10 Minuten eingehalten)   
-def überprüfe_zeitdifferenz(matrix): 
+# Function to check the time stamps (Is the temporal sequence logical and were the 10 minutes adhered to)   
+def check_time_difference(matrix): 
     for i in range(len(matrix) - 1):
         if matrix[i][-2] == "'in'" and matrix[i+1][-2] == "'out'":
-            zeit_in = matrix[i][-1]
-            zeit_out = matrix[i+1][-1]
-            if zeit_out < zeit_in:
-                return False, f"Der Zeitstempel für 'out' ({zeit_out}) ist kleiner als der Zeitstempel für 'in' ({zeit_in})"  
+            time_in = matrix[i][-1]
+            time_out = matrix[i+1][-1]
+            if time_out < time_in:
+                return False, f"The timestamp for 'out' ({time_out}) is less than the timestamp for 'in' ({time_in})"  
             
         elif matrix[i][-2] == "'out'" and matrix[i+1][-2] == "'in'":
-            zeit_out = matrix[i][-1]
-            zeit_in = matrix[i+1][-1]
-            zeitdifferenz = zeit_in - zeit_out
-            if zeitdifferenz > timedelta(minutes=10):
-                return False, "Die Zeitdifferenz zwischen 'out' und 'in' beträgt mehr als 10 Minuten."
+            time_out = matrix[i][-1]
+            time_in = matrix[i+1][-1]
+            time_difference = time_in - time_out
+            if time_difference > timedelta(minutes=10):
+                return False, "The time difference between 'out' and 'in' is more than 10 minutes."
     return True, ""
 
-#Funktion zur Überprüfung ob die Transportdauer von 48 Stunden eingehalten worden ist
-def überprüfe_transportdauer(matrix):
-    erste_zeit = matrix[0][-1]
-    letzte_zeit = matrix[-1][-1]
-    gesamte_transportdauert = letzte_zeit - erste_zeit
-    if gesamte_transportdauert > timedelta(hours=48):
+# Function to check if the transport duration of 48 hours has been adhered to
+def check_transport_duration(matrix):
+    first_time = matrix[0][-1]
+    last_time = matrix[-1][-1]
+    total_transport_duration = last_time - first_time
+    if total_transport_duration > timedelta(hours=48):
         return False
     return True
