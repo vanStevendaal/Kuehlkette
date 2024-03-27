@@ -2,6 +2,8 @@
 
 This Python program is a comprehensive solution for monitoring and verifying cold chains by analyzing data from a SQL database. It utilizes a connection to the database to identify specific transport operations and verify if they meet the established requirements. This project was developed as part of a trainee program for certified technicians.
 
+## Table of Contents
+
 1. [Features](#features)
 2. [Usage](#Usage)
 3. [License](#license)
