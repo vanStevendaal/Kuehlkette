@@ -1,6 +1,6 @@
 ## Cooling Verifaction
 
-This Python program is a comprehensive solution for monitoring and verifying cold chains by analyzing data from a SQL database. It utilizes a connection to the database to identify specific transport operations and verify if they meet the established requirements. This project was developed as part of a training program for certified technicians.
+This Python program is a comprehensive solution for monitoring and verifying cold chains by analyzing data from a SQL database. It utilizes a connection to the database to identify specific transport operations and verify if they meet the established requirements. This project was developed as part of a trainee program for certified technicians.
 
 1. [Features](#features)
 2. [Functions](#functions)
