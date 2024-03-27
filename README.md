@@ -15,7 +15,7 @@ This Python program is a comprehensive solution for monitoring and verifying col
  3. Data Extraction: For the selected transport ID, retrieves all associated records from the database and writes them into another list.
  4. Analysis by Subprograms: The program utilizes three specialized functions to check the integrity and efficiency of the transport. The explanation of these functions is provided on the next page.
  5. Result Evaluation: Informs the user about the outcome of the checks. In case of violations against the criteria, detailed warning messages are issued.
- 6.Repeatable Checks: The program runs in a continuous loop, allowing to choose a new transport ID after each analysis and repeat the inspection.
+ 6. Repeatable Checks: The program runs in a continuous loop, allowing to choose a new transport ID after each analysis and repeat the inspection.
 
 ## Functions
 
